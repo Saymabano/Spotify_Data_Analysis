@@ -1,6 +1,5 @@
 --  SQL Spotify Project
 
-
 CREATE TABLE spotify
 (  
    Artist VARCHAR(255),	
@@ -72,19 +71,19 @@ SELECT * FROM spotify;
 SELECT track FROM spotify
 WHERE stream >=1000000000;
 
--- 
+-- album with their respective artist
 SELECT album, artist FROM spotify;
 
--- 
+--total no of comments for track where licensed = 'true' 
 SELECT track, COUNT(comments) FROM spotify
 WHERE licensed = 'true'
 GROUP BY track;
 
--- 
+-- all tracks that belong to the album type single
 SELECT track  FROM spotify
 WHERE album_type = 'single';
 
--- 
+-- total number of track
 SELECT artist, COUNT(track) FROM spotify
 GROUP BY artist;
 
@@ -122,8 +121,6 @@ group by 1
 order by 2 desc;
 
 -- each album, calculate total views of all associated tracks
-
-
 SELECT 
   album,
   track,
@@ -169,7 +166,8 @@ where liveness > (SELECT
    AVG(liveness)as liveness_avg  -- 0.19
 FROM spotify);
  
--- c
+-- highest and lowest energy values for tracks in each album
+
 WITH energy_diffrences
 AS
 (SELECT
@@ -183,7 +181,6 @@ SELECT
   album,
  (highest_energy - lowest_energy) as energy_diffrence
 FROM energy_diffrences;
-
 
 -- Query Optimization
 EXPLAIN ANALYZE --et 12.22ms pt 0.17ms
@@ -199,6 +196,7 @@ order by stream DESC LIMIT 25;
 
 CREATE INDEX artist_index ON spotify(artist);
 
+-- End of Project
 
 
 
